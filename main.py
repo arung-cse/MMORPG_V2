@@ -1,6 +1,18 @@
 from player import Player
+from monster import get_monster
+from battle import battle
+from inventory import (
+    show_inventory,
+    use_potion
+)
+from save_system import (
+    save_player,
+    load_player
+)
 
-print("=== MMORPG V2 ===")
+print("===================")
+print(" MMORPG V2 ")
+print("===================")
 
 name = input("Enter Name: ")
 job = input("Choose Job: ")
@@ -9,10 +21,15 @@ player = Player(name, job)
 
 while True:
 
-    print("\n===== MENU =====")
-
+    print("\n===================")
     print("1. Show Stats")
-    print("2. Exit")
+    print("2. Hunt Monster")
+    print("3. Inventory")
+    print("4. Use Potion")
+    print("5. Save Game")
+    print("6. Load Game")
+    print("7. Exit")
+    print("===================")
 
     choice = input("Choice: ")
 
@@ -22,6 +39,34 @@ while True:
 
     elif choice == "2":
 
-        print("Goodbye!")
+        monster = get_monster()
 
+        battle(
+            player,
+            monster
+        )
+
+    elif choice == "3":
+
+        show_inventory(player)
+
+    elif choice == "4":
+
+        use_potion(player)
+
+    elif choice == "5":
+
+        save_player(player)
+
+    elif choice == "6":
+
+        load_player(player)
+
+    elif choice == "7":
+
+        print("\nGoodbye!")
         break
+
+    else:
+
+        print("\nInvalid Choice!")
