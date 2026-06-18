@@ -5,6 +5,10 @@ from inventory import (
     show_inventory,
     use_potion
 )
+from equipment import (
+    show_equipment,
+    equip_item
+)
 from save_system import (
     save_player,
     load_player
@@ -26,9 +30,10 @@ while True:
     print("2. Hunt Monster")
     print("3. Inventory")
     print("4. Use Potion")
-    print("5. Save Game")
-    print("6. Load Game")
-    print("7. Exit")
+    print("5. Equipment")
+    print("6. Save Game")
+    print("7. Load Game")
+    print("8. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -56,13 +61,17 @@ while True:
 
     elif choice == "5":
 
-        save_player(player)
+        show_equipment(player)
 
     elif choice == "6":
 
-        load_player(player)
+        save_player(player)
 
     elif choice == "7":
+
+        load_player(player)
+
+    elif choice == "8":
 
         print("\nGoodbye!")
         break

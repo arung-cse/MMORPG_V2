@@ -14,6 +14,9 @@ class Player:
 
         self.attack = 10
 
+        self.weapon = "None"
+        self.armor = "None"
+
         self.inventory = {
             "Health Potion": 3
         }

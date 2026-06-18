@@ -1,0 +1,13 @@
+{
+    "name": "arun",
+    "job": "mage",
+    "level": 1,
+    "exp": 25,
+    "gold": 110,
+    "hp": 100,
+    "max_hp": 100,
+    "attack": 10,
+    "inventory": {
+        "Health Potion": 2
+    }
+}

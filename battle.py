@@ -46,6 +46,14 @@ def battle(player, monster):
 
                 player.gold += monster["gold"]
 
+
+                drop = random.randint(1, 100)
+                if drop <= 20:
+
+                    player.inventory["Iron Sword"] = 1
+
+                    print("Monster Dropped Iron Sword!")
+
                 print(
                     "+",
                     monster["exp"],
