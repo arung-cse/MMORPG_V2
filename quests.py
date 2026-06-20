@@ -51,3 +51,58 @@ def show_quests(player):
             + "/"
             + str(quest["required"])
         )
+
+
+def claim_rewards(player):
+
+    print("\n===== CLAIM QUESTS =====")
+
+    completed = False
+
+    for quest_name, quest in QUESTS.items():
+
+        target = quest["target"]
+
+        progress = player.quest_progress.get(
+            target,
+            0
+        )
+
+        if progress >= quest["required"]:
+
+            completed = True
+
+            print(
+                "\nCompleted:",
+                quest_name
+            )
+
+            player.gold += quest[
+                "reward_gold"
+            ]
+
+            player.gain_exp(
+                quest["reward_exp"]
+            )
+
+            print(
+                "+",
+                quest["reward_gold"],
+                "Gold"
+            )
+
+            print(
+                "+",
+                quest["reward_exp"],
+                "EXP"
+            )
+
+            player.quest_progress[
+                target
+            ] = 0
+
+    if not completed:
+
+        print(
+            "\nNo completed quests!"
+        )

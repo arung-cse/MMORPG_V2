@@ -38,6 +38,7 @@ class Player:
             "Skeleton": 0,
             "Orc": 0
         }
+        self.completed_quests = []
 
         self.setup_job()
 

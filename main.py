@@ -9,11 +9,22 @@ from equipment import (
     show_equipment,
     equip_item
 )
-from quests import show_quests
+from quests import (
+    show_quests,
+    claim_rewards
+)
+
 from save_system import (
     save_player,
     load_player
 )
+
+from shop import (
+    buy_item,
+    sell_item
+)
+
+from town import town_menu
 
 print("===================")
 print(" MMORPG V2 ")
@@ -40,10 +51,13 @@ while True:
     print("4. Use Potion")
     print("5. Equipment")
     print("6. Skills")
-    print("7. Quests")
-    print("8. Save Game")
-    print("9. Load Game")
-    print("10. Exit")
+    print("7. Town")
+    print("8. Shop")
+    print("9. Quests")
+    print("10. Claim Rewards")
+    print("11. Save Game")
+    print("12. Load Game")
+    print("13. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -92,20 +106,46 @@ while True:
         from skills import show_skills
 
         show_skills(player)
-
+    
     elif choice == "7":
 
-        show_quests(player)
+        town_menu(player)
 
     elif choice == "8":
 
-        save_player(player)
+        print("\n===== SHOP =====")
+        print("1. Buy")
+        print("2. Sell")
+
+    shop_choice = input(
+        "Choice: "
+    )
+
+    if shop_choice == "1":
+
+        buy_item(player)
+
+    elif shop_choice == "2":
+
+        sell_item(player)
 
     elif choice == "9":
 
+        show_quests(player)
+    
+    elif choice == "10":
+
+        claim_rewards(player)
+
+    elif choice == "11":
+
+        save_player(player)
+
+    elif choice == "12":
+
         load_player(player)
 
-    elif choice == "10":
+    elif choice == "13":
 
         print("\nGoodbye!")
         break
