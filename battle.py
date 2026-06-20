@@ -105,12 +105,6 @@ def battle(player, monster):
 
             print(
                 "+",
-                monster["exp"],
-                "EXP"
-            )
-
-            print(
-                "+",
                 monster["gold"],
                 "Gold"
             )

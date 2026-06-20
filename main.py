@@ -1,14 +1,17 @@
 from player import Player
 from monster import get_monster
 from battle import battle
+
 from inventory import (
     show_inventory,
     use_potion
 )
+
 from equipment import (
     show_equipment,
     equip_item
 )
+
 from quests import (
     show_quests,
     claim_rewards
@@ -26,11 +29,15 @@ from shop import (
 
 from town import town_menu
 
+from skills import show_skills
+
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
 
 name = input("Enter Name: ")
+
 print("\nAvailable Jobs")
 print("Warrior")
 print("Mage")
@@ -62,9 +69,17 @@ while True:
 
     choice = input("Choice: ")
 
+    # =====================
+    # SHOW STATS
+    # =====================
+
     if choice == "1":
 
         player.show_stats()
+
+    # =====================
+    # HUNT MONSTER
+    # =====================
 
     elif choice == "2":
 
@@ -72,13 +87,25 @@ while True:
 
         battle(player, monster)
 
+    # =====================
+    # INVENTORY
+    # =====================
+
     elif choice == "3":
 
         show_inventory(player)
 
+    # =====================
+    # USE POTION
+    # =====================
+
     elif choice == "4":
 
         use_potion(player)
+
+    # =====================
+    # EQUIPMENT
+    # =====================
 
     elif choice == "5":
 
@@ -93,61 +120,109 @@ while True:
         equip_choice = input("Choice: ")
 
         if equip_choice == "1":
-            equip_item(player, "Iron Sword")
+
+            equip_item(
+                player,
+                "Iron Sword"
+            )
 
         elif equip_choice == "2":
-            equip_item(player, "Steel Sword")
+
+            equip_item(
+                player,
+                "Steel Sword"
+            )
 
         elif equip_choice == "3":
-            equip_item(player, "Leather Armor")
-    
+
+            equip_item(
+                player,
+                "Leather Armor"
+            )
+
+    # =====================
+    # SKILLS
+    # =====================
+
     elif choice == "6":
 
-        from skills import show_skills
-
         show_skills(player)
-    
+
+        input(
+            "\nPress Enter To Continue..."
+        )
+
+    # =====================
+    # TOWN
+    # =====================
+
     elif choice == "7":
 
         town_menu(player)
+
+    # =====================
+    # SHOP
+    # =====================
 
     elif choice == "8":
 
         print("\n===== SHOP =====")
         print("1. Buy")
         print("2. Sell")
+        print("3. Back")
 
-    shop_choice = input(
-        "Choice: "
-    )
+        shop_choice = input(
+            "Choice: "
+        )
 
-    if shop_choice == "1":
+        if shop_choice == "1":
 
-        buy_item(player)
+            buy_item(player)
 
-    elif shop_choice == "2":
+        elif shop_choice == "2":
 
-        sell_item(player)
+            sell_item(player)
+
+    # =====================
+    # QUESTS
+    # =====================
 
     elif choice == "9":
 
         show_quests(player)
-    
+
+    # =====================
+    # CLAIM REWARDS
+    # =====================
+
     elif choice == "10":
 
         claim_rewards(player)
+
+    # =====================
+    # SAVE
+    # =====================
 
     elif choice == "11":
 
         save_player(player)
 
+    # =====================
+    # LOAD
+    # =====================
+
     elif choice == "12":
 
         load_player(player)
 
+    # =====================
+    # EXIT
+    # =====================
+
     elif choice == "13":
 
         print("\nGoodbye!")
+
         break
 
     else:
