@@ -27,10 +27,11 @@ from shop import (
     sell_item
 )
 
-from town import town_menu
+from town import tower_menu, town_menu
 
 from skills import show_skills
 
+from tower import tower_battle
 
 print("===================")
 print(" MMORPG V2 ")
@@ -48,6 +49,7 @@ print("Priest")
 job = input("\nChoose Job: ").title()
 
 player = Player(name, job)
+player.check_skill_unlocks()
 
 while True:
 
@@ -65,6 +67,7 @@ while True:
     print("11. Save Game")
     print("12. Load Game")
     print("13. Exit")
+    print("14. Tower")
     print("===================")
 
     choice = input("Choice: ")
@@ -224,6 +227,10 @@ while True:
         print("\nGoodbye!")
 
         break
+
+    elif choice == "14":
+
+        tower_menu(player)
 
     else:
 

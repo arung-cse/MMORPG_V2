@@ -40,6 +40,8 @@ class Player:
         }
         self.completed_quests = []
 
+        self.learned_skills = []
+
         self.setup_job()
 
     # ==========================
@@ -113,6 +115,8 @@ class Player:
 
             self.level += 1
 
+            self.check_skill_unlocks()
+
             self.max_hp += 20
             self.max_mp += 10
 
@@ -159,6 +163,28 @@ class Player:
 
         if self.hp < 0:
             self.hp = 0
+    
+    def check_skill_unlocks(self):
+
+       from skill_tree import SKILL_TREE
+
+       if self.job not in SKILL_TREE:
+            return
+
+       for level, skills in SKILL_TREE[self.job].items():
+
+           if self.level >= level:
+
+              for skill in skills:
+
+                if skill not in self.learned_skills:
+
+                    self.learned_skills.append(skill)
+
+                    print(
+                        "\nNEW SKILL UNLOCKED:",
+                        skill
+                    )
 
     # ==========================
     # DEAD CHECK
