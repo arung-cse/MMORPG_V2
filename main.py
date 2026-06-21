@@ -26,6 +26,9 @@ from shop import (
     buy_item,
     sell_item
 )
+from passive_system import (
+    show_passives
+)
 
 from town import tower_menu, town_menu
 
@@ -66,8 +69,9 @@ while True:
     print("10. Claim Rewards")
     print("11. Save Game")
     print("12. Load Game")
-    print("13. Exit")
-    print("14. Tower")
+    print("13. Tower")
+    print("14. Passives")
+    print("15. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -217,20 +221,24 @@ while True:
     elif choice == "12":
 
         load_player(player)
+    elif choice == "13":
 
+        tower_menu(player)
+
+    elif choice == "14":
+
+        show_passives(
+            player
+        )
     # =====================
     # EXIT
     # =====================
 
-    elif choice == "13":
+    elif choice == "15":
 
         print("\nGoodbye!")
 
         break
-
-    elif choice == "14":
-
-        tower_menu(player)
 
     else:
 

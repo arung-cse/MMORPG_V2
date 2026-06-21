@@ -1,4 +1,5 @@
 from jobs import JOBS
+from passive_system import check_passive_unlocks
 
 
 class Player:
@@ -118,6 +119,14 @@ class Player:
             self.level += 1
 
             self.check_skill_unlocks()
+
+            from passive_system import (
+            check_passive_unlocks
+        )
+
+            check_passive_unlocks(
+            self
+       )
 
             self.max_hp += 20
             self.max_mp += 10
