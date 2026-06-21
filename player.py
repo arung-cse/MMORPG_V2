@@ -42,6 +42,8 @@ class Player:
 
         self.learned_skills = []
 
+        self.learned_passives = []
+
         self.setup_job()
 
     # ==========================
