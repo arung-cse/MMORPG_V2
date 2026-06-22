@@ -123,6 +123,12 @@ class Player:
 
         self.level += 1
 
+        from advancement_system import (
+            check_job_advancement
+    )
+
+        check_job_advancement(self)
+
         self.check_skill_unlocks()
 
         from passive_system import (
