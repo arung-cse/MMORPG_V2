@@ -57,3 +57,6 @@ def boss_battle(player, boss):
             return False
 
     return False
+
+def boss_menu(player):
+    print("Boss Menu")

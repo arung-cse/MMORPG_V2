@@ -33,6 +33,8 @@ from passive_system import (
 
 from town import town_menu
 
+from boss_battle import boss_menu
+
 from tower import tower_menu
 
 from skills import show_skills
@@ -238,7 +240,7 @@ while True:
     
     elif choice == "15":
 
-        boss_data(player)
+       boss_menu(player)
     
     elif choice == "16":
 

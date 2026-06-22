@@ -46,6 +46,7 @@ class Player:
         self.learned_passives = []
 
         self.setup_job()
+        MAX_LEVEL = 1000
 
     # ==========================
     # JOB SETUP
@@ -71,6 +72,7 @@ class Player:
 
      self.attack = data["attack"]
      self.defense = data["defense"]
+
 
     # ==========================
     # SHOW STATS
@@ -108,37 +110,44 @@ class Player:
 
     def gain_exp(self, amount):
 
-        self.exp += amount
+       self.exp += amount
 
-        print(f"\n+{amount} EXP")
+       print(f"\n+{amount} EXP")
 
-        while self.exp >= 100:
+       while (
+        self.exp >= self.exp_needed()
+        and self.level < 1000
+    ):
 
-            self.exp -= 100
+        self.exp -= self.exp_needed()
 
-            self.level += 1
+        self.level += 1
 
-            self.check_skill_unlocks()
+        self.check_skill_unlocks()
 
-            from passive_system import (
+        from passive_system import (
+
             check_passive_unlocks
+
         )
 
-            check_passive_unlocks(
-            self
+        check_passive_unlocks(
+
+             self
+
        )
 
-            self.max_hp += 20
-            self.max_mp += 10
+        self.max_hp += 20
+        self.max_mp += 10
 
-            self.attack += 5
-            self.defense += 2
+        self.attack += 5
+        self.defense += 2
 
-            self.hp = self.max_hp
-            self.mp = self.max_mp
+        self.hp = self.max_hp
+        self.mp = self.max_mp
 
-            print("\nLEVEL UP!")
-            print("Level:", self.level)
+        print("\nLEVEL UP!")
+        print("Level:", self.level)
 
     # ==========================
     # GOLD
@@ -204,3 +213,7 @@ class Player:
     def is_dead(self):
 
         return self.hp <= 0
+    def exp_needed(self):
+
+        return self.level * 100
+    
