@@ -1,23 +1,49 @@
+from battle import battle
+import player
+from tower_bosses import TOWER_MONSTERS
+
 def tower_menu(player):
 
-    if not hasattr(player, "tower_floor"):
-        player.tower_floor = 1
+ if not hasattr(player, "tower_floor"):
+    player.tower_floor = 1
 
-    while True:
+while True:
 
-        print("\n===== TOWER =====")
+    print("\n===== TOWER =====")
 
-        print(
-            "Current Floor:",
-            player.tower_floor
+    print(
+        "Current Floor:",
+        player.tower_floor
+    )
+
+    print("1. Challenge Floor")
+    print("2. Leave Tower")
+
+    choice = input("Choice: ")
+
+    if choice == "1":
+
+        monster_index = min(
+            player.tower_floor // 5,
+            len(TOWER_MONSTERS) - 1
         )
 
-        print("1. Challenge Floor")
-        print("2. Leave Tower")
+        monster = TOWER_MONSTERS[
+            monster_index
+        ].copy()
 
-        choice = input("Choice: ")
+        print(
+            "\n===== FLOOR",
+            player.tower_floor,
+            "====="
+        )
 
-        if choice == "1":
+        battle(
+            player,
+            monster
+        )
+
+        if player.hp > 0:
 
             reward_exp = (
                 player.tower_floor * 20
@@ -27,36 +53,26 @@ def tower_menu(player):
                 player.tower_floor * 10
             )
 
-            print(
-                "\nFloor",
-                player.tower_floor,
-                "Cleared!"
-            )
-
-            # =====================
-            # MOUNT EXP BONUS
-            # =====================
-
             if hasattr(player, "mount") and player.mount:
 
                 from mount_data import MOUNTS
 
-                percent = MOUNTS[player.mount]["exp_bonus"]
+                percent = MOUNTS[
+                    player.mount
+                ]["exp_bonus"]
 
                 reward_exp += (
                     reward_exp * percent
                 ) // 100
 
-            # =====================
-            # GIVE REWARDS
-            # =====================
-
             player.gain_exp(
                 reward_exp
             )
 
-            player.gold += (
-                reward_gold
+            player.gold += reward_gold
+
+            print(
+                "\nFloor Cleared!"
             )
 
             print(
@@ -73,12 +89,12 @@ def tower_menu(player):
 
             player.tower_floor += 1
 
-        elif choice == "2":
+    elif choice == "2":
 
-            break
+        break
 
-        else:
+    else:
 
-            print(
-                "Invalid Choice!"
-            )
+        print(
+            "Invalid Choice!"
+        )
