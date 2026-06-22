@@ -51,6 +51,10 @@ from mount_system import (
     show_mount
 )
 
+from world_boss import (
+    world_boss_menu
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -90,7 +94,8 @@ while True:
     print("16. Dungeons")
     print("17. Pets")
     print("18. Mounts")
-    print("19. Exit")
+    print("19. World Boss")
+    print("20. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -307,11 +312,17 @@ while True:
         elif mount_choice == "3":
 
             break
+
+    elif choice == "19":
+
+        world_boss_menu(
+            player
+        )
     # =====================
     # EXIT
     # =====================
 
-    elif choice == "19":
+    elif choice == "20":
 
         print("\nGoodbye!")
 
