@@ -41,6 +41,16 @@ from skills import show_skills
 
 from dungeon import dungeon_menu
 
+from pet_system import (
+    adopt_pet,
+    show_pet
+   )
+
+from mount_system import (
+    adopt_mount,
+    show_mount
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -78,7 +88,9 @@ while True:
     print("14. Passives")
     print("15. Boss Raid")
     print("16. Dungeons")
-    print("17. Exit")
+    print("17. Pets")
+    print("18. Mounts")
+    print("19. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -245,11 +257,61 @@ while True:
     elif choice == "16":
 
       dungeon_menu(player)
+
+    elif choice == "17":
+
+     while True:
+
+        print("\n===== PET MENU =====")
+
+        print("1. Adopt Pet")
+        print("2. View Pet")
+        print("3. Back")
+
+        pet_choice = input("Choice: ")
+
+        if pet_choice == "1":
+
+            adopt_pet(player)
+
+        elif pet_choice == "2":
+
+            show_pet(player)
+
+        elif pet_choice == "3":
+
+            break
+    
+    elif choice == "18":
+
+     while True:
+
+        print("\n===== MOUNT MENU =====")
+
+        print("1. Adopt Mount")
+        print("2. View Mount")
+        print("3. Back")
+
+        mount_choice = input(
+            "Choice: "
+        )
+
+        if mount_choice == "1":
+
+            adopt_mount(player)
+
+        elif mount_choice == "2":
+
+            show_mount(player)
+
+        elif mount_choice == "3":
+
+            break
     # =====================
     # EXIT
     # =====================
 
-    elif choice == "17":
+    elif choice == "19":
 
         print("\nGoodbye!")
 

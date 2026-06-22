@@ -50,9 +50,19 @@ def dungeon_menu(player):
             dungeon_name
         )
 
-        player.gain_exp(
-            dungeon["exp"]
-        )
+        reward_exp = dungeon["exp"]
+
+        if player.mount:
+
+            from mount_data import MOUNTS
+
+            percent = MOUNTS[player.mount]["exp_bonus"]
+
+            reward_exp += (
+            reward_exp * percent
+        ) // 100
+
+        player.gain_exp(reward_exp)
 
         player.gold += (
             dungeon["gold"]

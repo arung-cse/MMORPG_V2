@@ -33,6 +33,24 @@ def tower_menu(player):
                 "Cleared!"
             )
 
+            # =====================
+            # MOUNT EXP BONUS
+            # =====================
+
+            if hasattr(player, "mount") and player.mount:
+
+                from mount_data import MOUNTS
+
+                percent = MOUNTS[player.mount]["exp_bonus"]
+
+                reward_exp += (
+                    reward_exp * percent
+                ) // 100
+
+            # =====================
+            # GIVE REWARDS
+            # =====================
+
             player.gain_exp(
                 reward_exp
             )
@@ -61,4 +79,6 @@ def tower_menu(player):
 
         else:
 
-            print("Invalid Choice!")
+            print(
+                "Invalid Choice!"
+            )

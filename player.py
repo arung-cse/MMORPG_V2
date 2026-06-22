@@ -45,6 +45,10 @@ class Player:
 
         self.learned_passives = []
 
+        self.pet = None
+
+        self.mount = None
+
         self.setup_job()
         MAX_LEVEL = 1000
 

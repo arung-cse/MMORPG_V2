@@ -1,5 +1,7 @@
 import random
+from pet_data import PETS
 
+pet_bonus = 0
 
 def battle(player, monster):
 
@@ -26,14 +28,30 @@ def battle(player, monster):
 
         if choice == "1":
 
+            pet_bonus = 0
+
+        if player.pet:
+
+            pet_bonus = PETS[
+                player.pet
+            ]["attack"]
+
             damage = random.randint(
-                max(1, player.attack - 3),
-                player.attack + 3
+
+                player.attack +
+                pet_bonus - 3,
+
+                player.attack +
+                pet_bonus + 3
             )
 
             monster_hp -= damage
 
-            print("\nYou dealt", damage, "damage!")
+            print(
+            "\nYou dealt",
+             damage,
+             "damage!"
+            )
 
         # =========================
         # SKILLS
@@ -91,19 +109,29 @@ def battle(player, monster):
                 monster["name"]
             )
 
-            player.gain_exp(
-                monster["exp"]
-            )
+            reward_exp = monster["exp"]
 
-            player.gold += monster["gold"]
+            if player.mount:
 
-            monster_name = monster["name"]
+                from mount_data import MOUNTS
 
-            if monster_name in player.quest_progress:
+            percent = MOUNTS[player.mount]["exp_bonus"]
+
+            reward_exp += (
+            reward_exp * percent
+            ) // 100
+
+        player.gain_exp(reward_exp)
+
+        player.gold += monster["gold"]
+
+        monster_name = monster["name"]
+
+        if monster_name in player.quest_progress:
 
              player.quest_progress[monster_name] += 1
 
-            print(
+             print(
                 "+",
                 monster["gold"],
                 "Gold"
@@ -111,9 +139,9 @@ def battle(player, monster):
 
             # Item Drop
 
-            drop = random.randint(1, 100)
+        drop = random.randint(1, 100)
 
-            if drop <= 20:
+        if drop <= 20:
 
                 player.inventory["Iron Sword"] = (
                     player.inventory.get(
@@ -126,7 +154,7 @@ def battle(player, monster):
                     "Monster Dropped Iron Sword!"
                 )
 
-            return
+        return
 
         # =========================
         # MONSTER ATTACK
@@ -159,3 +187,7 @@ def battle(player, monster):
         print(
             "Respawned in town!"
         )
+
+    if player.pet:
+
+         pet_bonus = PETS[player.pet]["attack"]
