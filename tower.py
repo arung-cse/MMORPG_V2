@@ -19,17 +19,18 @@ def tower_menu(player):
 
         if choice == "1":
 
-            print(
-                "\nYou cleared Floor",
-                player.tower_floor
-            )
-
             reward_exp = (
                 player.tower_floor * 20
             )
 
             reward_gold = (
                 player.tower_floor * 10
+            )
+
+            print(
+                "\nFloor",
+                player.tower_floor,
+                "Cleared!"
             )
 
             player.gain_exp(
@@ -56,4 +57,8 @@ def tower_menu(player):
 
         elif choice == "2":
 
-            return
+            break
+
+        else:
+
+            print("Invalid Choice!")

@@ -1,3 +1,4 @@
+import boss_data
 from player import Player
 from monster import get_monster
 from battle import battle
@@ -30,11 +31,13 @@ from passive_system import (
     show_passives
 )
 
-from town import tower_menu, town_menu
+from town import town_menu
+
+from tower import tower_menu
 
 from skills import show_skills
 
-from tower import tower_battle
+from dungeon import dungeon_menu
 
 print("===================")
 print(" MMORPG V2 ")
@@ -71,7 +74,9 @@ while True:
     print("12. Load Game")
     print("13. Tower")
     print("14. Passives")
-    print("15. Exit")
+    print("15. Boss Raid")
+    print("16. Dungeons")
+    print("17. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -230,11 +235,19 @@ while True:
         show_passives(
             player
         )
+    
+    elif choice == "15":
+
+        boss_data(player)
+    
+    elif choice == "16":
+
+      dungeon_menu(player)
     # =====================
     # EXIT
     # =====================
 
-    elif choice == "15":
+    elif choice == "17":
 
         print("\nGoodbye!")
 
