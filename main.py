@@ -323,53 +323,53 @@ while True:
 
     elif choice == "17":
 
-     while True:
+        while True:
 
-        print("\n===== PET MENU =====")
+            print("\n===== PET MENU =====")
 
-        print("1. Adopt Pet")
-        print("2. View Pet")
-        print("3. Back")
+            print("1. Adopt Pet")
+            print("2. View Pet")
+            print("3. Back")
 
-        pet_choice = input("Choice: ")
+            pet_choice = input("Choice: ")
 
-        if pet_choice == "1":
+            if pet_choice == "1":
 
-            adopt_pet(player)
+                adopt_pet(player)
 
-        elif pet_choice == "2":
+            elif pet_choice == "2":
 
-            show_pet(player)
+                show_pet(player)
 
-        elif pet_choice == "3":
+            elif pet_choice == "3":
 
-            break
+                break
     
     elif choice == "18":
 
-     while True:
+        while True:
 
-        print("\n===== MOUNT MENU =====")
+            print("\n===== MOUNT MENU =====")
 
-        print("1. Adopt Mount")
-        print("2. View Mount")
-        print("3. Back")
+            print("1. Adopt Mount")
+            print("2. View Mount")
+            print("3. Back")
 
-        mount_choice = input(
-            "Choice: "
-        )
+            mount_choice = input(
+                "Choice: "
+            )
 
-        if mount_choice == "1":
+            if mount_choice == "1":
 
-            adopt_mount(player)
+                adopt_mount(player)
 
-        elif mount_choice == "2":
+            elif mount_choice == "2":
 
-            show_mount(player)
+                show_mount(player)
 
-        elif mount_choice == "3":
+            elif mount_choice == "3":
 
-            break
+                break
 
     elif choice == "19":
 
@@ -379,77 +379,77 @@ while True:
     
     elif choice == "20":
 
-     blacksmith_menu(
-        player
-    )
+        blacksmith_menu(
+            player
+        )
     elif choice == "21":
 
-     alchemy_menu(
-        player
-    )
+        alchemy_menu(
+            player
+        )
      
     elif choice == "22":
 
-     upgrade_menu(
-        player
-    )
+        upgrade_menu(
+            player
+        )
      
     elif choice == "23":
 
-     gem_menu(player)
+        gem_menu(player)
 
     elif choice == "24":
 
-     guild_menu(
-        player
-    )
+        guild_menu(
+            player
+        )
      
     elif choice == "25":
 
-     world_map_menu(
-        player
-    )
+        world_map_menu(
+            player
+        )
 
     elif choice == "26":
 
-     npc_menu(
-        player
-    )
+        npc_menu(
+            player
+        )
 
     elif choice == "27":
 
-     story_quest_menu(
-        player
-    )
+        story_quest_menu(
+            player
+        )
      
     elif choice == "28":
 
-     show_achievements(
-        player
-    )
+        show_achievements(
+            player
+        )
 
 
     elif choice == "29":
 
-     arena_menu(
-        player
-    )
+        arena_menu(
+            player
+        )
      
     elif choice == "30":
 
-     auction_menu(
-        player
-    )
+        auction_menu(
+            player
+        )
      
     elif choice == "31":
 
-     title_menu(player)
+        title_menu(player)
 
 
     elif choice == "32":
 
-     print("\nGoodbye!")
-    break
+        print("\nGoodbye!")
+        break
 
 else:
 
