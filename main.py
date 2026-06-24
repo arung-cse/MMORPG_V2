@@ -69,6 +69,10 @@ from upgrade_menu import (
 
 from gem_menu import gem_menu
 
+from guild_menu import (
+    guild_menu
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -113,7 +117,8 @@ while True:
     print("21. Alchemy")
     print("22. Upgrade Equipment")
     print("23. Gem System")
-    print("24. Exit")
+    print("24. Guild")
+    print("25. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -359,6 +364,12 @@ while True:
      gem_menu(player)
 
     elif choice == "24":
+
+     guild_menu(
+        player
+    )
+
+    elif choice == "25":
 
      print("\nGoodbye!")
     break

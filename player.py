@@ -58,6 +58,8 @@ class Player:
         self.setup_job()
         self.max_level = 1000
 
+        self.guild = None
+
     # ==========================
     # JOB SETUP
     # ==========================
