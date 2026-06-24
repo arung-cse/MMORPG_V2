@@ -59,6 +59,10 @@ from skills import (
     show_skills
 )
 
+from alchemy import (
+    alchemy_menu
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -100,7 +104,8 @@ while True:
     print("18. Mounts")
     print("19. World Boss")
     print("20. Blacksmith")
-    print("21. Exit")
+    print("21. Alchemy")
+    print("22. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -329,16 +334,17 @@ while True:
      blacksmith_menu(
         player
     )
-    # =====================
-    # EXIT
-    # =====================
-
     elif choice == "21":
 
-        print("\nGoodbye!")
+     alchemy_menu(
+        player
+    )
 
-        break
+    elif choice == "22":
 
-    else:
+     print("\nGoodbye!")
+    break
+
+else:
 
         print("\nInvalid Choice!")

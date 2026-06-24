@@ -155,19 +155,55 @@ def battle(player, monster):
                 )
 
         return
+    
+    if monster["name"] == "Goblin":
+
+     player.inventory["Herb"] = (
+        player.inventory.get(
+            "Herb",
+            0
+        ) + 1
+    )
+
+    if monster["name"] == "Wolf":
+
+     player.inventory["Blue Herb"] = (
+        player.inventory.get(
+            "Blue Herb",
+            0
+        ) + 1
+    )
+
+    if monster["name"] == "Skeleton":
+
+     player.inventory["Life Crystal"] = (
+        player.inventory.get(
+            "Life Crystal",
+            0
+        ) + 1
+    )
+
+    if monster["name"] == "Orc":
+
+     player.inventory["Red Crystal"] = (
+        player.inventory.get(
+            "Red Crystal",
+            0
+        ) + 1
+    )
 
         # =========================
         # MONSTER ATTACK
         # =========================
 
-        enemy_damage = random.randint(
+    enemy_damage = random.randint(
             max(1, monster["attack"] - 2),
             monster["attack"] + 2
         )
 
-        player.hp -= enemy_damage
+    player.hp -= enemy_damage
 
-        print(
+    print(
             monster["name"],
             "dealt",
             enemy_damage,
