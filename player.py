@@ -50,7 +50,7 @@ class Player:
         self.mount = None
 
         self.setup_job()
-        MAX_LEVEL = 1000
+        self.max_level = 1000
 
     # ==========================
     # JOB SETUP

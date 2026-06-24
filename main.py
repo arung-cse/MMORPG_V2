@@ -27,24 +27,20 @@ from shop import (
     buy_item,
     sell_item
 )
+
 from passive_system import (
     show_passives
 )
 
 from town import town_menu
-
-from boss_battle import boss_menu
-
 from tower import tower_menu
-
-from skills import show_skills
-
 from dungeon import dungeon_menu
+from boss_battle import boss_menu
 
 from pet_system import (
     adopt_pet,
     show_pet
-   )
+)
 
 from mount_system import (
     adopt_mount,
@@ -53,6 +49,14 @@ from mount_system import (
 
 from world_boss import (
     world_boss_menu
+)
+
+from blacksmith import (
+    blacksmith_menu
+)
+
+from skills import (
+    show_skills
 )
 
 print("===================")
@@ -95,7 +99,8 @@ while True:
     print("17. Pets")
     print("18. Mounts")
     print("19. World Boss")
-    print("20. Exit")
+    print("20. Blacksmith")
+    print("21. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -318,11 +323,17 @@ while True:
         world_boss_menu(
             player
         )
+    
+    elif choice == "20":
+
+     blacksmith_menu(
+        player
+    )
     # =====================
     # EXIT
     # =====================
 
-    elif choice == "20":
+    elif choice == "21":
 
         print("\nGoodbye!")
 

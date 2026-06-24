@@ -2,7 +2,7 @@ from pet_data import PETS
 
 def adopt_pet(player):
 
-    if hasattr(player, "pet"):
+    if player.pet:
 
         print("\nYou already have a pet!")
 
