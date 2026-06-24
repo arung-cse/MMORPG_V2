@@ -67,7 +67,9 @@ class Player:
         self.dungeons_cleared = 0
 
         self.completed_achievements = []
-
+        
+        self.arena_rank = 0
+        
     # ==========================
     # JOB SETUP
     # ==========================

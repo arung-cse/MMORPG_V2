@@ -93,6 +93,8 @@ from achievement_menu import (
     show_achievements
 )
 
+from arena import arena_menu
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -142,7 +144,8 @@ while True:
     print("26. NPC")
     print("27. Story Quest")
     print("28. Achievements")
-    print("29. Exit")
+    print("29. Arena")
+    print("30. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -411,14 +414,20 @@ while True:
         player
     )
      
-    elif choice == "30":
+    elif choice == "28":
 
      show_achievements(
         player
     )
 
 
-    elif choice == "28":
+    elif choice == "29":
+
+     arena_menu(
+        player
+    )
+
+    elif choice == "30":
 
      print("\nGoodbye!")
     break
