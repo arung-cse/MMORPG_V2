@@ -60,6 +60,8 @@ class Player:
 
         self.guild = None
 
+        self.current_area = "Beginner Village"
+
     # ==========================
     # JOB SETUP
     # ==========================

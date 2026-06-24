@@ -73,6 +73,18 @@ from guild_menu import (
     guild_menu
 )
 
+from world_map import (
+    world_map_menu
+)
+
+from npc_system import (
+    npc_menu
+)
+
+from story_quests import (
+    story_quest_menu
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -118,7 +130,10 @@ while True:
     print("22. Upgrade Equipment")
     print("23. Gem System")
     print("24. Guild")
-    print("25. Exit")
+    print("25. World Map")
+    print("26. NPC")
+    print("27. Story Quest")
+    print("28. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -368,8 +383,27 @@ while True:
      guild_menu(
         player
     )
-
+     
     elif choice == "25":
+
+     world_map_menu(
+        player
+    )
+
+    elif choice == "26":
+
+     npc_menu(
+        player
+    )
+
+    elif choice == "27":
+
+     story_quest_menu(
+        player
+    )
+
+
+    elif choice == "28":
 
      print("\nGoodbye!")
     break
