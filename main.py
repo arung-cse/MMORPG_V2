@@ -63,6 +63,10 @@ from alchemy import (
     alchemy_menu
 )
 
+from upgrade_menu import (
+    upgrade_menu
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -105,6 +109,7 @@ while True:
     print("19. World Boss")
     print("20. Blacksmith")
     print("21. Alchemy")
+    print("22. Upgrade Equipment")
     print("22. Exit")
     print("===================")
 
@@ -337,6 +342,12 @@ while True:
     elif choice == "21":
 
      alchemy_menu(
+        player
+    )
+     
+    elif choice == "22":
+
+     upgrade_menu(
         player
     )
 

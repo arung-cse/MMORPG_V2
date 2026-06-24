@@ -28,6 +28,9 @@ class Player:
         self.armor = "None"
         self.accessory = "None"
 
+        self.weapon_level = 0
+        self.armor_level = 0
+
         self.inventory = {
             "Health Potion": 3,
             "Mana Potion": 2
