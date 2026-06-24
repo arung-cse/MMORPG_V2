@@ -95,6 +95,10 @@ from achievement_menu import (
 
 from arena import arena_menu
 
+from auction_menu import (
+    auction_menu
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -145,7 +149,8 @@ while True:
     print("27. Story Quest")
     print("28. Achievements")
     print("29. Arena")
-    print("30. Exit")
+    print("30. Auction House")
+    print("31. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -426,8 +431,15 @@ while True:
      arena_menu(
         player
     )
-
+     
     elif choice == "30":
+
+     auction_menu(
+        player
+    )
+
+
+    elif choice == "31":
 
      print("\nGoodbye!")
     break
