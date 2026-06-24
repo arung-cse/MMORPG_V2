@@ -85,6 +85,14 @@ from story_quests import (
     story_quest_menu
 )
 
+from achievement_system import (
+    check_achievements
+)
+
+from achievement_menu import (
+    show_achievements
+)
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -133,7 +141,8 @@ while True:
     print("25. World Map")
     print("26. NPC")
     print("27. Story Quest")
-    print("28. Exit")
+    print("28. Achievements")
+    print("29. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -399,6 +408,12 @@ while True:
     elif choice == "27":
 
      story_quest_menu(
+        player
+    )
+     
+    elif choice == "30":
+
+     show_achievements(
         player
     )
 

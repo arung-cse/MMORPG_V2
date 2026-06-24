@@ -62,6 +62,12 @@ class Player:
 
         self.current_area = "Beginner Village"
 
+        self.total_kills = 0
+        self.boss_kills = 0
+        self.dungeons_cleared = 0
+
+        self.completed_achievements = []
+
     # ==========================
     # JOB SETUP
     # ==========================

@@ -215,7 +215,9 @@ def battle(player, monster):
     ) + 1
 )
 
+    player.total_kills += 1
 
+    player.boss_kills += 1
         # =========================
         # MONSTER ATTACK
         # =========================

@@ -124,3 +124,4 @@ def dungeon_menu(player):
                 reward_gold,
                 "Gold"
             )
+            player.dungeons_cleared += 1
