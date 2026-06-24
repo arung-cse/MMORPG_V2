@@ -69,7 +69,10 @@ class Player:
         self.completed_achievements = []
         
         self.arena_rank = 0
-        
+
+        self.title = "None"
+        self.unlocked_titles = []
+
     # ==========================
     # JOB SETUP
     # ==========================
