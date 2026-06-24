@@ -31,6 +31,9 @@ class Player:
         self.weapon_level = 0
         self.armor_level = 0
 
+        self.weapon_gems = []
+        self.armor_gems = []
+
         self.inventory = {
             "Health Potion": 3,
             "Mana Potion": 2

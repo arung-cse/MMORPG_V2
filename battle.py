@@ -192,6 +192,30 @@ def battle(player, monster):
         ) + 1
     )
 
+    drop = random.randint(1, 100)
+
+    if drop <= 10:
+
+     player.inventory["Attack Gem"] = (
+        player.inventory.get(
+            "Attack Gem",
+            0
+        ) + 1
+    )
+
+    print(
+        "Dropped Attack Gem!"
+    ) 
+    player.inventory[
+    "Legendary Gem"
+] = (
+    player.inventory.get(
+        "Legendary Gem",
+        0
+    ) + 1
+)
+
+
         # =========================
         # MONSTER ATTACK
         # =========================
