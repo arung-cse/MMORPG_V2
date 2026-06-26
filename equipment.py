@@ -1,38 +1,250 @@
+from equipment_data import EQUIPMENT
+
+
+# ==========================================
+# SHOW EQUIPMENT
+# ==========================================
+
 def show_equipment(player):
 
-    print("\n===== EQUIPMENT =====")
+    print("\n========================")
+    print("     EQUIPMENT")
+    print("========================")
 
-    print("Weapon:",
-          player.weapon)
+    print("Weapon     :", player.weapon)
+    print("Armor      :", player.armor)
+    print("Accessory  :", player.accessory)
 
-    print("Armor:",
-          player.armor)
+    print("\nCurrent Stats")
+
+    print("Attack   :", player.attack)
+    print("Defense  :", player.defense)
+    print("HP       :", player.hp, "/", player.max_hp)
+    print("MP       :", player.mp, "/", player.max_mp)
+    print("Critical :", str(player.critical) + "%")
 
 
-def equip_item(player, item):
+# ==========================================
+# EQUIP MENU
+# ==========================================
 
-    if item == "Iron Sword":
+def equip_menu(player):
 
-        player.weapon = item
+    while True:
 
-        player.attack += 10
+        print("\n========== EQUIP ==========")
 
-        print("\nIron Sword Equipped!")
+        equip_list = []
 
-    elif item == "Steel Sword":
+        for item in player.inventory:
 
-        player.weapon = item
+            if item in EQUIPMENT:
 
-        player.attack += 20
+                equip_list.append(item)
 
-        print("\nSteel Sword Equipped!")
+        if len(equip_list) == 0:
 
-    elif item == "Leather Armor":
+            print("No equipment found.")
 
-        player.armor = item
+            return
 
-        player.max_hp += 50
+        for i, item in enumerate(equip_list):
 
-        player.hp += 50
+            data = EQUIPMENT[item]
 
-        print("\nLeather Armor Equipped!")
+            print(
+                f"{i+1}. {item}"
+            )
+
+            print(
+                "   Type   :",
+                data["type"]
+            )
+
+            print(
+                "   Rarity :",
+                data["rarity"]
+            )
+
+            print(
+                "   Level  :",
+                data.get("level", 1)
+            )
+
+        print("0. Exit")
+
+        choice = input("Choice: ")
+
+        if choice == "0":
+
+            return
+
+        try:
+
+            item = equip_list[
+                int(choice)-1
+            ]
+
+            equip_item(
+                player,
+                item
+            )
+
+        except:
+
+            print(
+                "Invalid Choice!"
+            )
+
+
+# ==========================================
+# EQUIP ITEM
+# ==========================================
+
+def equip_item(player, item_name):
+
+    if item_name not in EQUIPMENT:
+
+        print("Unknown Item!")
+
+        return
+
+    if item_name not in player.inventory:
+
+        print("Item not in inventory!")
+
+        return
+
+    data = EQUIPMENT[item_name]
+
+    if player.level < data.get("level", 1):
+
+        print(
+            "Need Level",
+            data["level"]
+        )
+
+        return
+
+    # Remove old equipment stats
+
+    remove_stats(player)
+
+    # Equip
+
+    if data["type"] == "Weapon":
+
+        player.weapon = item_name
+
+    elif data["type"] == "Armor":
+
+        player.armor = item_name
+
+    elif data["type"] == "Accessory":
+
+        player.accessory = item_name
+
+    # Apply stats
+
+    apply_stats(player)
+
+    print(
+        "\nEquipped:",
+        item_name
+    )
+
+
+# ==========================================
+# APPLY STATS
+# ==========================================
+
+def apply_stats(player):
+
+    for item in [
+
+        player.weapon,
+
+        player.armor,
+
+        player.accessory
+
+    ]:
+
+        if item == "None":
+
+            continue
+
+        data = EQUIPMENT[item]
+
+        player.attack += data.get(
+            "attack",
+            0
+        )
+
+        player.defense += data.get(
+            "defense",
+            0
+        )
+
+        player.max_hp += data.get(
+            "hp",
+            0
+        )
+
+        player.max_mp += data.get(
+            "mp",
+            0
+        )
+
+        player.critical += data.get(
+            "critical",
+            0
+        )
+
+
+# ==========================================
+# REMOVE STATS
+# ==========================================
+
+def remove_stats(player):
+
+    for item in [
+
+        player.weapon,
+
+        player.armor,
+
+        player.accessory
+
+    ]:
+
+        if item == "None":
+
+            continue
+
+        data = EQUIPMENT[item]
+
+        player.attack -= data.get(
+            "attack",
+            0
+        )
+
+        player.defense -= data.get(
+            "defense",
+            0
+        )
+
+        player.max_hp -= data.get(
+            "hp",
+            0
+        )
+
+        player.max_mp -= data.get(
+            "mp",
+            0
+        )
+
+        player.critical -= data.get(
+            "critical",
+            0
+        )

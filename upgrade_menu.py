@@ -1,36 +1,31 @@
-from upgrade_system import (
-    upgrade_weapon
-)
+from upgrade_system import upgrade_weapon
 
 
 def upgrade_menu(player):
 
     while True:
 
-        print(
-            "\n===== UPGRADE ====="
-        )
+        print("\n===== UPGRADE SHOP =====")
 
         print(
-            "Weapon:",
+            "Weapon :",
             player.weapon,
-            "+",
-            player.weapon_level
+            "+" + str(player.weapon_upgrade)
         )
 
-        print("1. Upgrade Weapon")
+        print("\n1. Upgrade Weapon")
         print("2. Exit")
 
-        choice = input(
-            "Choice: "
-        )
+        choice = input("Choice: ")
 
         if choice == "1":
 
-            upgrade_weapon(
-                player
-            )
+            upgrade_weapon(player)
 
         elif choice == "2":
 
             break
+
+        else:
+
+            print("Invalid Choice!")

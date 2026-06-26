@@ -73,6 +73,11 @@ class Player:
         self.title = "None"
         self.unlocked_titles = []
 
+        # Equipment Upgrade Levels
+        self.weapon_upgrade = 0
+        self.armor_upgrade = 0
+        self.accessory_upgrade = 0
+
     # ==========================
     # JOB SETUP
     # ==========================

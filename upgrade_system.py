@@ -1,68 +1,62 @@
 import random
+from upgrade_data import UPGRADE
 
-from upgrade_data import UPGRADE_COST
+
+MAX_UPGRADE = 15
 
 
 def upgrade_weapon(player):
 
     if player.weapon == "None":
 
-        print("\nNo Weapon Equipped!")
+        print("\nNo weapon equipped!")
 
         return
 
-    next_level = (
-        player.weapon_level + 1
-    )
+    if player.weapon_upgrade >= MAX_UPGRADE:
 
-    if next_level > 15:
-
-        print("\nMax Upgrade!")
+        print("\nWeapon already max!")
 
         return
 
-    cost = UPGRADE_COST[
-        next_level
-    ]
+    info = UPGRADE[player.weapon_upgrade]
+
+    cost = info["cost"]
+
+    chance = info["success"]
+
+    print("\n===== WEAPON UPGRADE =====")
+
+    print("Weapon :", player.weapon)
+
+    print("Current :", "+" + str(player.weapon_upgrade))
+
+    print("Success :", str(chance) + "%")
+
+    print("Cost :", cost)
 
     if player.gold < cost:
 
-        print(
-            "\nNot Enough Gold!"
-        )
+        print("\nNot enough Gold!")
 
         return
 
     player.gold -= cost
 
-    success_rate = max(
-        100 - (next_level * 5),
-        20
-    )
+    roll = random.randint(1,100)
 
-    roll = random.randint(
-        1,
-        100
-    )
+    if roll <= chance:
 
-    if roll <= success_rate:
+        player.weapon_upgrade += 1
 
-        player.weapon_level += 1
+        player.attack += 5
 
-        player.attack += 10
+        print("\n★★★★★ SUCCESS ★★★★★")
 
-        print(
-            "\nSUCCESS!"
-        )
+        print(player.weapon)
 
-        print(
-            player.weapon,
-            "+",
-            player.weapon_level
-        )
+        print("+" + str(player.weapon_upgrade))
 
     else:
 
-        print(
-            "\nUpgrade Failed!"
-        )
+        print("\nUpgrade Failed!")

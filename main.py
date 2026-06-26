@@ -9,6 +9,7 @@ from inventory import (
 )
 
 from equipment import (
+    equip_menu,
     show_equipment,
     equip_item
 )
@@ -200,34 +201,9 @@ while True:
 
         show_equipment(player)
 
-        print("\nEquip Options")
-        print("1. Iron Sword")
-        print("2. Steel Sword")
-        print("3. Leather Armor")
-        print("4. Back")
+        equip_menu(player)
 
-        equip_choice = input("Choice: ")
-
-        if equip_choice == "1":
-
-            equip_item(
-                player,
-                "Iron Sword"
-            )
-
-        elif equip_choice == "2":
-
-            equip_item(
-                player,
-                "Steel Sword"
-            )
-
-        elif equip_choice == "3":
-
-            equip_item(
-                player,
-                "Leather Armor"
-            )
+        
 
     # =====================
     # SKILLS
