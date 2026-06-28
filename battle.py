@@ -1,5 +1,3 @@
-import random
-
 from battle_attack import normal_attack
 from battle_monster import monster_attack
 from battle_rewards import give_rewards
@@ -9,6 +7,8 @@ from battle_status import (
     process_status,
     apply_status
 )
+
+from battle_element import element_bonus
 
 from skills import (
     show_skills,
@@ -26,9 +26,9 @@ def battle(player, monster):
 
     while monster_hp > 0 and player.hp > 0:
 
-        # -------------------------
-        # Status Effects
-        # -------------------------
+        # ==========================
+        # STATUS EFFECTS
+        # ==========================
 
         process_status(player)
 
@@ -41,21 +41,28 @@ def battle(player, monster):
 
         choice = input("Choice: ")
 
-        # -------------------------
-        # Normal Attack
-        # -------------------------
+        # ==========================
+        # NORMAL ATTACK
+        # ==========================
 
         if choice == "1":
 
             damage = normal_attack(player)
 
+            # Element Damage
+            damage = element_bonus(
+                damage,
+                "Fire",          # Replace later with weapon element
+                monster.get("element")
+            )
+
             monster_hp -= damage
 
             print(f"\nYou dealt {damage} damage!")
 
-        # -------------------------
-        # Skills
-        # -------------------------
+        # ==========================
+        # SKILLS
+        # ==========================
 
         elif choice == "2":
 
@@ -66,16 +73,22 @@ def battle(player, monster):
             damage = use_skill(player, skill)
 
             if damage <= 0:
-
                 continue
+
+            # Element Damage
+            damage = element_bonus(
+                damage,
+                "Fire",          # Replace later with skill element
+                monster.get("element")
+            )
 
             monster_hp -= damage
 
             print(f"{skill} dealt {damage} damage!")
 
-        # -------------------------
-        # Run
-        # -------------------------
+        # ==========================
+        # RUN
+        # ==========================
 
         elif choice == "3":
 
@@ -89,9 +102,9 @@ def battle(player, monster):
 
             continue
 
-        # -------------------------
-        # Monster Dead
-        # -------------------------
+        # ==========================
+        # MONSTER DEFEATED
+        # ==========================
 
         if monster_hp <= 0:
 
@@ -101,9 +114,11 @@ def battle(player, monster):
 
             give_loot(player, monster)
 
-            if monster["name"] in player.quest_progress:
+            if hasattr(player, "quest_progress"):
 
-                player.quest_progress[monster["name"]] += 1
+                if monster["name"] in player.quest_progress:
+
+                    player.quest_progress[monster["name"]] += 1
 
             if hasattr(player, "total_kills"):
 
@@ -111,9 +126,9 @@ def battle(player, monster):
 
             return True
 
-        # -------------------------
-        # Monster Status Skill
-        # -------------------------
+        # ==========================
+        # MONSTER STATUS EFFECT
+        # ==========================
 
         if "status" in monster:
 
@@ -122,14 +137,18 @@ def battle(player, monster):
                 monster["status"]
             )
 
-        # -------------------------
-        # Monster Attack
-        # -------------------------
+        # ==========================
+        # MONSTER ATTACK
+        # ==========================
 
         monster_attack(
             player,
             monster
         )
+
+    # ==========================
+    # PLAYER DEAD
+    # ==========================
 
     print("\n===== YOU DIED =====")
 
