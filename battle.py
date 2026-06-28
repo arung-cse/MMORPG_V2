@@ -7,13 +7,13 @@ def battle(player, monster):
     monster_hp = monster["hp"]
 
     print("\n======================")
-    print("A Wild", monster["name"], "Appeared!")
+    print(f"A Wild {monster['name']} Appeared!")
     print("======================")
 
     while monster_hp > 0 and player.hp > 0:
 
-        print("\nYour HP :", player.hp, "/", player.max_hp)
-        print(monster["name"], "HP :", monster_hp)
+        print(f"\nYour HP : {player.hp}/{player.max_hp}")
+        print(f"{monster['name']} HP : {monster_hp}")
 
         print("\n1. Attack")
         print("2. Skills")
@@ -21,15 +21,15 @@ def battle(player, monster):
 
         choice = input("Choice: ")
 
-        # =========================
+        # =====================================
         # NORMAL ATTACK
-        # =========================
+        # =====================================
 
         if choice == "1":
 
             pet_bonus = 0
 
-            if player.pet:
+            if hasattr(player, "pet") and player.pet:
 
                 pet_bonus = PETS[player.pet]["attack"]
 
@@ -40,15 +40,11 @@ def battle(player, monster):
 
             monster_hp -= damage
 
-            print(
-                "\nYou dealt",
-                damage,
-                "damage!"
-            )
+            print(f"\nYou dealt {damage} damage!")
 
-        # =========================
-        # SKILLS
-        # =========================
+        # =====================================
+        # SKILL ATTACK
+        # =====================================
 
         elif choice == "2":
 
@@ -57,35 +53,26 @@ def battle(player, monster):
 
             show_skills(player)
 
-            skill_name = input("Skill: ").title()
+            skill = input("Skill: ").title()
 
-            damage = use_skill(
-                player,
-                skill_name
-            )
+            damage = use_skill(player, skill)
 
             if damage <= 0:
-
                 continue
 
             monster_hp -= damage
 
-            print(
-                skill_name,
-                "dealt",
-                damage,
-                "damage!"
-            )
+            print(f"{skill} dealt {damage} damage!")
 
-        # =========================
+        # =====================================
         # RUN
-        # =========================
+        # =====================================
 
         elif choice == "3":
 
-            print("\nEscaped!")
+            print("\nYou escaped!")
 
-            return
+            return False
 
         else:
 
@@ -93,181 +80,143 @@ def battle(player, monster):
 
             continue
 
-        # =========================
-        # MONSTER DEAD
-        # =========================
+        # =====================================
+        # MONSTER DEFEATED
+        # =====================================
 
         if monster_hp <= 0:
 
-            print(
-                "\nYou defeated",
-                monster["name"]
-            )
+            print(f"\nYou defeated {monster['name']}!")
 
-            reward_exp = monster["exp"]
-            reward_gold = monster["gold"]
+            reward_exp = monster.get("exp", 0)
+            reward_gold = monster.get("gold", 0)
 
             # Mount EXP Bonus
 
-            if player.mount:
+            if hasattr(player, "mount") and player.mount:
 
                 from mount_data import MOUNTS
 
-                percent = MOUNTS[player.mount]["exp_bonus"]
+                bonus = MOUNTS[player.mount]["exp_bonus"]
 
-                reward_exp += (
-                    reward_exp * percent
-                ) // 100
+                reward_exp += reward_exp * bonus // 100
 
-            player.gain_exp(
-                reward_exp
-            )
+            player.gain_exp(reward_exp)
+            player.gain_gold(reward_gold)
 
-            player.gold += reward_gold
-
-            print(
-                "+",
-                reward_exp,
-                "EXP"
-            )
-
-            print(
-                "+",
-                reward_gold,
-                "Gold"
-            )
+            print(f"+ {reward_exp} EXP")
+            print(f"+ {reward_gold} Gold")
 
             # Quest Progress
 
-            if monster["name"] in player.quest_progress:
+            if hasattr(player, "quest_progress"):
 
-                player.quest_progress[
-                    monster["name"]
-                ] += 1
+                if monster["name"] in player.quest_progress:
+
+                    player.quest_progress[monster["name"]] += 1
 
             # Statistics
 
-            player.total_kills += 1
+            if hasattr(player, "total_kills"):
 
-            # =========================
+                player.total_kills += 1
+
+            if hasattr(player, "boss_kills"):
+
+                if monster.get("boss", False):
+
+                    player.boss_kills += 1
+
+            # =====================================
             # MATERIAL DROPS
-            # =========================
+            # =====================================
 
-            if monster["name"] == "Goblin":
+            drops = {
 
-                player.inventory["Herb"] = (
-                    player.inventory.get(
-                        "Herb",
-                        0
-                    ) + 1
+                "Goblin": "Herb",
+
+                "Wolf": "Blue Herb",
+
+                "Skeleton": "Life Crystal",
+
+                "Orc": "Red Crystal"
+
+            }
+
+            if monster["name"] in drops:
+
+                item = drops[monster["name"]]
+
+                player.inventory[item] = (
+                    player.inventory.get(item, 0) + 1
                 )
 
-            elif monster["name"] == "Wolf":
+                print(f"Dropped: {item}")
 
-                player.inventory["Blue Herb"] = (
-                    player.inventory.get(
-                        "Blue Herb",
-                        0
-                    ) + 1
-                )
-
-            elif monster["name"] == "Skeleton":
-
-                player.inventory["Life Crystal"] = (
-                    player.inventory.get(
-                        "Life Crystal",
-                        0
-                    ) + 1
-                )
-
-            elif monster["name"] == "Orc":
-
-                player.inventory["Red Crystal"] = (
-                    player.inventory.get(
-                        "Red Crystal",
-                        0
-                    ) + 1
-                )
-
-            # =========================
+            # =====================================
             # EQUIPMENT DROP
-            # =========================
+            # =====================================
 
             if random.randint(1, 100) <= 20:
 
                 player.inventory["Iron Sword"] = (
-                    player.inventory.get(
-                        "Iron Sword",
-                        0
-                    ) + 1
+                    player.inventory.get("Iron Sword", 0) + 1
                 )
 
-                print(
-                    "Monster Dropped Iron Sword!"
-                )
+                print("Dropped: Iron Sword")
 
-            # =========================
-            # GEM DROP
-            # =========================
+            # =====================================
+            # ATTACK GEM
+            # =====================================
 
             if random.randint(1, 100) <= 10:
 
                 player.inventory["Attack Gem"] = (
-                    player.inventory.get(
-                        "Attack Gem",
-                        0
-                    ) + 1
+                    player.inventory.get("Attack Gem", 0) + 1
                 )
 
-                print(
-                    "Dropped Attack Gem!"
-                )
+                print("Dropped: Attack Gem")
+
+            # =====================================
+            # LEGENDARY GEM
+            # =====================================
 
             if random.randint(1, 1000) == 1:
 
                 player.inventory["Legendary Gem"] = (
-                    player.inventory.get(
-                        "Legendary Gem",
-                        0
-                    ) + 1
+                    player.inventory.get("Legendary Gem", 0) + 1
                 )
 
-                print(
-                    "★★★★★ Legendary Gem Dropped!"
-                )
+                print("★★★★★ Legendary Gem Dropped! ★★★★★")
 
-            return
+            return True
 
-        # =========================
+        # =====================================
         # MONSTER ATTACK
-        # =========================
+        # =====================================
 
         enemy_damage = random.randint(
+
             max(1, monster["attack"] - 2),
+
             monster["attack"] + 2
+
         )
 
-        player.take_damage(
-            enemy_damage
-        )
+        player.take_damage(enemy_damage)
 
-        print(
-            monster["name"],
-            "dealt",
-            enemy_damage,
-            "damage!"
-        )
+        print(f"{monster['name']} dealt {enemy_damage} damage!")
 
-    # =========================
+    # =====================================
     # PLAYER DEAD
-    # =========================
+    # =====================================
 
     if player.hp <= 0:
 
-        print("\nYOU DIED!")
+        print("\n===== YOU DIED =====")
 
         player.hp = player.max_hp
 
-        print(
-            "Respawned in town!"
-        )
+        print("Respawned in Town!")
+
+        return False
