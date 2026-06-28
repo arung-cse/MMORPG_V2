@@ -1,62 +1,61 @@
-import random
+from boss_data import BOSSES
+from battle import battle
 
-def boss_battle(player, boss):
 
-    boss_hp = boss["hp"]
+def boss_menu(player):
 
-    print("\n===== BOSS BATTLE =====")
-    print(boss["name"])
+    while True:
 
-    while boss_hp > 0 and player.hp > 0:
+        print("\n========== BOSS RAID ==========")
 
-        print("\nYour HP:", player.hp)
-        print("Boss HP:", boss_hp)
+        for i, boss in enumerate(BOSSES):
 
-        print("1. Attack")
-        print("2. Run")
+            print(
+                f"{i+1}. {boss['name']}  (Lv.{boss['level']})"
+            )
+
+        print("0. Back")
 
         choice = input("Choice: ")
 
-        if choice == "1":
+        if choice == "0":
 
-            damage = random.randint(
-                player.attack,
-                player.attack + 20
-            )
+            return
 
-            boss_hp -= damage
+        try:
+
+            boss = BOSSES[int(choice)-1].copy()
+
+        except:
+
+            print("Invalid Choice!")
+
+            continue
+
+        if player.level < boss["level"]:
 
             print(
-                "You dealt",
-                damage,
-                "damage!"
+                f"\nRequired Level : {boss['level']}"
             )
 
-            if boss_hp <= 0:
+            continue
 
-                print(
-                    "\nBoss Defeated!"
-                )
+        print("\n==============================")
+        print("Boss :", boss["name"])
+        print("Element :", boss["element"])
+        print("HP :", boss["hp"])
+        print("Attack :", boss["attack"])
+        print("==============================")
 
-                player.gain_exp(
-                    boss["exp"]
-                )
+        start = input(
+            "\nStart Battle? (y/n): "
+        ).lower()
 
-                player.gold += (
-                    boss["gold"]
-                )
+        if start != "y":
 
-                return True
+            continue
 
-            player.take_damage(
-                boss["attack"]
-            )
-
-        elif choice == "2":
-
-            return False
-
-    return False
-
-def boss_menu(player):
-    print("Boss Menu")
+        battle(
+            player,
+            boss
+        )

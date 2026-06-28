@@ -1,15 +1,15 @@
 {
-    "name": "arun",
+    "name": "a",
     "job": "Mage",
-    "level": 3,
-    "exp": 50,
-    "gold": 220,
-    "hp": 120,
-    "max_hp": 120,
-    "attack": 50,
+    "level": 1,
+    "exp": 25,
+    "gold": 110,
+    "hp": 80,
+    "max_hp": 80,
+    "attack": 30,
     "inventory": {
-        "Health Potion": 3,
+        "Health Potion": 2,
         "Mana Potion": 2,
-        "Iron Sword": 1
+        "Herb": 1
     }
 }
