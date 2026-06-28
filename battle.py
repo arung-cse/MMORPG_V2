@@ -1,5 +1,19 @@
 import random
-from pet_data import PETS
+
+from battle_attack import normal_attack
+from battle_monster import monster_attack
+from battle_rewards import give_rewards
+from battle_loot import give_loot
+
+from battle_status import (
+    process_status,
+    apply_status
+)
+
+from skills import (
+    show_skills,
+    use_skill
+)
 
 
 def battle(player, monster):
@@ -12,6 +26,12 @@ def battle(player, monster):
 
     while monster_hp > 0 and player.hp > 0:
 
+        # -------------------------
+        # Status Effects
+        # -------------------------
+
+        process_status(player)
+
         print(f"\nYour HP : {player.hp}/{player.max_hp}")
         print(f"{monster['name']} HP : {monster_hp}")
 
@@ -21,35 +41,23 @@ def battle(player, monster):
 
         choice = input("Choice: ")
 
-        # =====================================
-        # NORMAL ATTACK
-        # =====================================
+        # -------------------------
+        # Normal Attack
+        # -------------------------
 
         if choice == "1":
 
-            pet_bonus = 0
-
-            if hasattr(player, "pet") and player.pet:
-
-                pet_bonus = PETS[player.pet]["attack"]
-
-            damage = random.randint(
-                player.attack + pet_bonus - 3,
-                player.attack + pet_bonus + 3
-            )
+            damage = normal_attack(player)
 
             monster_hp -= damage
 
             print(f"\nYou dealt {damage} damage!")
 
-        # =====================================
-        # SKILL ATTACK
-        # =====================================
+        # -------------------------
+        # Skills
+        # -------------------------
 
         elif choice == "2":
-
-            from skills import show_skills
-            from skills import use_skill
 
             show_skills(player)
 
@@ -58,165 +66,75 @@ def battle(player, monster):
             damage = use_skill(player, skill)
 
             if damage <= 0:
+
                 continue
 
             monster_hp -= damage
 
             print(f"{skill} dealt {damage} damage!")
 
-        # =====================================
-        # RUN
-        # =====================================
+        # -------------------------
+        # Run
+        # -------------------------
 
         elif choice == "3":
 
-            print("\nYou escaped!")
+            print("\nEscaped!")
 
             return False
 
         else:
 
-            print("\nInvalid Choice!")
+            print("Invalid Choice!")
 
             continue
 
-        # =====================================
-        # MONSTER DEFEATED
-        # =====================================
+        # -------------------------
+        # Monster Dead
+        # -------------------------
 
         if monster_hp <= 0:
 
             print(f"\nYou defeated {monster['name']}!")
 
-            reward_exp = monster.get("exp", 0)
-            reward_gold = monster.get("gold", 0)
+            give_rewards(player, monster)
 
-            # Mount EXP Bonus
+            give_loot(player, monster)
 
-            if hasattr(player, "mount") and player.mount:
+            if monster["name"] in player.quest_progress:
 
-                from mount_data import MOUNTS
-
-                bonus = MOUNTS[player.mount]["exp_bonus"]
-
-                reward_exp += reward_exp * bonus // 100
-
-            player.gain_exp(reward_exp)
-            player.gain_gold(reward_gold)
-
-            print(f"+ {reward_exp} EXP")
-            print(f"+ {reward_gold} Gold")
-
-            # Quest Progress
-
-            if hasattr(player, "quest_progress"):
-
-                if monster["name"] in player.quest_progress:
-
-                    player.quest_progress[monster["name"]] += 1
-
-            # Statistics
+                player.quest_progress[monster["name"]] += 1
 
             if hasattr(player, "total_kills"):
 
                 player.total_kills += 1
 
-            if hasattr(player, "boss_kills"):
-
-                if monster.get("boss", False):
-
-                    player.boss_kills += 1
-
-            # =====================================
-            # MATERIAL DROPS
-            # =====================================
-
-            drops = {
-
-                "Goblin": "Herb",
-
-                "Wolf": "Blue Herb",
-
-                "Skeleton": "Life Crystal",
-
-                "Orc": "Red Crystal"
-
-            }
-
-            if monster["name"] in drops:
-
-                item = drops[monster["name"]]
-
-                player.inventory[item] = (
-                    player.inventory.get(item, 0) + 1
-                )
-
-                print(f"Dropped: {item}")
-
-            # =====================================
-            # EQUIPMENT DROP
-            # =====================================
-
-            if random.randint(1, 100) <= 20:
-
-                player.inventory["Iron Sword"] = (
-                    player.inventory.get("Iron Sword", 0) + 1
-                )
-
-                print("Dropped: Iron Sword")
-
-            # =====================================
-            # ATTACK GEM
-            # =====================================
-
-            if random.randint(1, 100) <= 10:
-
-                player.inventory["Attack Gem"] = (
-                    player.inventory.get("Attack Gem", 0) + 1
-                )
-
-                print("Dropped: Attack Gem")
-
-            # =====================================
-            # LEGENDARY GEM
-            # =====================================
-
-            if random.randint(1, 1000) == 1:
-
-                player.inventory["Legendary Gem"] = (
-                    player.inventory.get("Legendary Gem", 0) + 1
-                )
-
-                print("★★★★★ Legendary Gem Dropped! ★★★★★")
-
             return True
 
-        # =====================================
-        # MONSTER ATTACK
-        # =====================================
+        # -------------------------
+        # Monster Status Skill
+        # -------------------------
 
-        enemy_damage = random.randint(
+        if "status" in monster:
 
-            max(1, monster["attack"] - 2),
+            apply_status(
+                player,
+                monster["status"]
+            )
 
-            monster["attack"] + 2
+        # -------------------------
+        # Monster Attack
+        # -------------------------
 
+        monster_attack(
+            player,
+            monster
         )
 
-        player.take_damage(enemy_damage)
+    print("\n===== YOU DIED =====")
 
-        print(f"{monster['name']} dealt {enemy_damage} damage!")
+    player.hp = player.max_hp
 
-    # =====================================
-    # PLAYER DEAD
-    # =====================================
+    print("Respawned in Town!")
 
-    if player.hp <= 0:
-
-        print("\n===== YOU DIED =====")
-
-        player.hp = player.max_hp
-
-        print("Respawned in Town!")
-
-        return False
+    return False

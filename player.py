@@ -78,6 +78,8 @@ class Player:
         self.armor_upgrade = 0
         self.accessory_upgrade = 0
 
+        self.status_effects = {}
+
     # ==========================
     # JOB SETUP
     # ==========================
