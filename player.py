@@ -80,6 +80,10 @@ class Player:
 
         self.status_effects = {}
 
+        self.weapon_enchant = None
+        self.armor_enchant = None
+        self.accessory_enchant = None
+
     # ==========================
     # JOB SETUP
     # ==========================

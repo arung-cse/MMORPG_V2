@@ -102,6 +102,8 @@ from auction_menu import (
 
 from title_menu import title_menu
 
+from enchant_menu import enchant_menu
+
 print("===================")
 print(" MMORPG V2 ")
 print("===================")
@@ -154,7 +156,8 @@ while True:
     print("29. Arena")
     print("30. Auction House")
     print("31. Titles")
-    print("32. Exit")
+    print("32. Enchant Equipment")
+    print("33. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -421,8 +424,12 @@ while True:
 
         title_menu(player)
 
-
     elif choice == "32":
+
+        enchant_menu(player)
+
+
+    elif choice == "33":
 
         print("\nGoodbye!")
         break
