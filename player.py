@@ -38,6 +38,7 @@ class Player:
             "Health Potion": 3,
             "Mana Potion": 2
         }
+        self.bestiary = {}
 
         self.quest_progress = {
             "Goblin": 0,

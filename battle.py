@@ -16,6 +16,7 @@ from skills import (
 
 from monster_ai import monster_ai
 from boss_ai import boss_phase
+from bestiary_system import update_bestiary
 
 
 def battle(player, monster):
@@ -149,6 +150,11 @@ def battle(player, monster):
             )
 
             give_loot(
+                player,
+                monster
+            )
+
+            update_bestiary(
                 player,
                 monster
             )

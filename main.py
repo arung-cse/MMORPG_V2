@@ -103,6 +103,7 @@ from auction_menu import (
 from title_menu import title_menu
 
 from enchant_menu import enchant_menu
+from bestiary_menu import show_bestiary
 
 print("===================")
 print(" MMORPG V2 ")
@@ -157,7 +158,8 @@ while True:
     print("30. Auction House")
     print("31. Titles")
     print("32. Enchant Equipment")
-    print("33. Exit")
+    print("33. Bestiary")
+    print("34. Exit")
     print("===================")
 
     choice = input("Choice: ")
@@ -428,8 +430,12 @@ while True:
 
         enchant_menu(player)
 
-
     elif choice == "33":
+
+        show_bestiary(player)
+
+
+    elif choice == "34":
 
         print("\nGoodbye!")
         break
