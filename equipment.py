@@ -1,4 +1,21 @@
-from equipment_data import EQUIPMENT
+from equipment_data import (
+    WEAPONS,
+    ARMORS,
+    ACCESSORIES
+)
+
+from set_system import check_set_bonus
+
+
+# ==========================================
+# COMBINE ALL EQUIPMENT
+# ==========================================
+
+EQUIPMENT = {}
+
+EQUIPMENT.update(WEAPONS)
+EQUIPMENT.update(ARMORS)
+EQUIPMENT.update(ACCESSORIES)
 
 
 # ==========================================
@@ -8,14 +25,26 @@ from equipment_data import EQUIPMENT
 def show_equipment(player):
 
     print("\n========================")
-    print("     EQUIPMENT")
+    print("      EQUIPMENT")
     print("========================")
 
     print("Weapon     :", player.weapon)
+
+    if player.weapon != "None":
+
+        print(
+            "Element    :",
+            EQUIPMENT[player.weapon].get(
+                "element",
+                "None"
+            )
+        )
+
     print("Armor      :", player.armor)
+
     print("Accessory  :", player.accessory)
 
-    print("\nCurrent Stats")
+    print("\n========== STATS ==========")
 
     print("Attack   :", player.attack)
     print("Defense  :", player.defense)
@@ -32,7 +61,7 @@ def equip_menu(player):
 
     while True:
 
-        print("\n========== EQUIP ==========")
+        print("\n========== EQUIPMENT ==========")
 
         equip_list = []
 
@@ -44,7 +73,7 @@ def equip_menu(player):
 
         if len(equip_list) == 0:
 
-            print("No equipment found.")
+            print("\nNo Equipment Found!")
 
             return
 
@@ -53,27 +82,70 @@ def equip_menu(player):
             data = EQUIPMENT[item]
 
             print(
-                f"{i+1}. {item}"
+                f"\n{i+1}. {item}"
             )
 
             print(
-                "   Type   :",
+                "   Type      :",
                 data["type"]
             )
 
             print(
-                "   Rarity :",
+                "   Rarity    :",
                 data["rarity"]
             )
 
             print(
-                "   Level  :",
-                data.get("level", 1)
+                "   Level     :",
+                data.get(
+                    "level",
+                    1
+                )
             )
 
-        print("0. Exit")
+            print(
+                "   Attack    :",
+                data.get(
+                    "attack",
+                    0
+                )
+            )
 
-        choice = input("Choice: ")
+            print(
+                "   Defense   :",
+                data.get(
+                    "defense",
+                    0
+                )
+            )
+
+            print(
+                "   HP        :",
+                data.get(
+                    "hp",
+                    0
+                )
+            )
+
+            print(
+                "   Critical  :",
+                data.get(
+                    "critical",
+                    0
+                )
+            )
+
+            print(
+                "   Element   :",
+                data.get(
+                    "element",
+                    "None"
+                )
+            )
+
+        print("\n0. Exit")
+
+        choice = input("\nChoice: ")
 
         if choice == "0":
 
@@ -92,9 +164,7 @@ def equip_menu(player):
 
         except:
 
-            print(
-                "Invalid Choice!"
-            )
+            print("\nInvalid Choice!")
 
 
 # ==========================================
@@ -105,32 +175,31 @@ def equip_item(player, item_name):
 
     if item_name not in EQUIPMENT:
 
-        print("Unknown Item!")
+        print("\nUnknown Equipment!")
 
         return
 
     if item_name not in player.inventory:
 
-        print("Item not in inventory!")
+        print("\nItem not found!")
 
         return
 
     data = EQUIPMENT[item_name]
 
-    if player.level < data.get("level", 1):
+    if player.level < data.get(
+        "level",
+        1
+    ):
 
         print(
-            "Need Level",
+            "\nRequired Level:",
             data["level"]
         )
 
         return
 
-    # Remove old equipment stats
-
     remove_stats(player)
-
-    # Equip
 
     if data["type"] == "Weapon":
 
@@ -144,9 +213,9 @@ def equip_item(player, item_name):
 
         player.accessory = item_name
 
-    # Apply stats
-
     apply_stats(player)
+
+    apply_set_bonus(player)
 
     print(
         "\nEquipped:",
@@ -155,7 +224,7 @@ def equip_item(player, item_name):
 
 
 # ==========================================
-# APPLY STATS
+# APPLY EQUIPMENT STATS
 # ==========================================
 
 def apply_stats(player):
@@ -201,9 +270,12 @@ def apply_stats(player):
             0
         )
 
+    player.hp = player.max_hp
+    player.mp = player.max_mp
+
 
 # ==========================================
-# REMOVE STATS
+# REMOVE EQUIPMENT STATS
 # ==========================================
 
 def remove_stats(player):
@@ -248,3 +320,48 @@ def remove_stats(player):
             "critical",
             0
         )
+
+    if player.hp > player.max_hp:
+
+        player.hp = player.max_hp
+
+    if player.mp > player.max_mp:
+
+        player.mp = player.max_mp
+
+
+# ==========================================
+# APPLY SET BONUS
+# ==========================================
+
+def apply_set_bonus(player):
+
+    bonus = check_set_bonus(player)
+
+    if not bonus:
+
+        return
+
+    player.attack += bonus.get(
+        "attack",
+        0
+    )
+
+    player.defense += bonus.get(
+        "defense",
+        0
+    )
+
+    player.max_hp += bonus.get(
+        "hp",
+        0
+    )
+
+    player.critical += bonus.get(
+        "critical",
+        0
+    )
+
+    player.hp = player.max_hp
+
+    print("\n★★★★★ SET BONUS ACTIVATED ★★★★★")
