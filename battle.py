@@ -15,6 +15,8 @@ from skills import (
     use_skill
 )
 
+from monster_ai import monster_ai
+
 
 def battle(player, monster):
 
@@ -141,7 +143,7 @@ def battle(player, monster):
         # MONSTER ATTACK
         # ==========================
 
-        monster_attack(
+        monster_ai(
             player,
             monster
         )
