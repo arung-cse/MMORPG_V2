@@ -53,6 +53,28 @@ BOSSES = [
         "attack": 25000,
         "exp": 1000000,
         "gold": 1000000
+    },
+
+    {
+    "name": "Dragon Lord",
+
+    "level": 30,
+
+    "element": "Fire",
+
+    "hp": 25000,
+
+    "attack": 800,
+
+    "exp": 5000,
+
+    "gold": 10000,
+
+    "phase2": False,
+
+    "phase3": False,
+
+    "enraged": False
     }
 
 ]

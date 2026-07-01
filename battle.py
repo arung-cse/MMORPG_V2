@@ -1,5 +1,4 @@
 from battle_attack import normal_attack
-from battle_monster import monster_attack
 from battle_rewards import give_rewards
 from battle_loot import give_loot
 
@@ -16,11 +15,17 @@ from skills import (
 )
 
 from monster_ai import monster_ai
+from boss_ai import boss_phase
 
 
 def battle(player, monster):
 
+    # ==========================
+    # INITIALIZE BATTLE
+    # ==========================
+
     monster_hp = monster["hp"]
+    monster["current_hp"] = monster_hp
 
     print("\n======================")
     print(f"A Wild {monster['name']} Appeared!")
@@ -29,15 +34,17 @@ def battle(player, monster):
     while monster_hp > 0 and player.hp > 0:
 
         # ==========================
-        # STATUS EFFECTS
+        # PLAYER STATUS EFFECTS
         # ==========================
 
         process_status(player)
 
-        print(f"\nYour HP : {player.hp}/{player.max_hp}")
+        print("\n======================")
+        print(f"Your HP : {player.hp}/{player.max_hp}")
         print(f"{monster['name']} HP : {monster_hp}")
+        print("======================")
 
-        print("\n1. Attack")
+        print("1. Attack")
         print("2. Skills")
         print("3. Run")
 
@@ -51,14 +58,23 @@ def battle(player, monster):
 
             damage = normal_attack(player)
 
-            # Element Damage
             damage = element_bonus(
                 damage,
-                "Fire",          # Replace later with weapon element
+                "Fire",      # Replace later with weapon element
                 monster.get("element")
             )
 
             monster_hp -= damage
+
+            if monster_hp < 0:
+                monster_hp = 0
+
+            monster["current_hp"] = monster_hp
+
+            # Boss Phase System
+            if "phase2" in monster:
+
+                boss_phase(monster)
 
             print(f"\nYou dealt {damage} damage!")
 
@@ -70,23 +86,36 @@ def battle(player, monster):
 
             show_skills(player)
 
-            skill = input("Skill: ").title()
+            skill = input("\nSkill: ").title()
 
-            damage = use_skill(player, skill)
+            damage = use_skill(
+                player,
+                skill
+            )
 
             if damage <= 0:
+
                 continue
 
-            # Element Damage
             damage = element_bonus(
                 damage,
-                "Fire",          # Replace later with skill element
+                "Fire",      # Replace later with skill element
                 monster.get("element")
             )
 
             monster_hp -= damage
 
-            print(f"{skill} dealt {damage} damage!")
+            if monster_hp < 0:
+                monster_hp = 0
+
+            monster["current_hp"] = monster_hp
+
+            # Boss Phase System
+            if "phase2" in monster:
+
+                boss_phase(monster)
+
+            print(f"\n{skill} dealt {damage} damage!")
 
         # ==========================
         # RUN
@@ -100,7 +129,7 @@ def battle(player, monster):
 
         else:
 
-            print("Invalid Choice!")
+            print("\nInvalid Choice!")
 
             continue
 
@@ -110,21 +139,41 @@ def battle(player, monster):
 
         if monster_hp <= 0:
 
+            monster["current_hp"] = 0
+
             print(f"\nYou defeated {monster['name']}!")
 
-            give_rewards(player, monster)
+            give_rewards(
+                player,
+                monster
+            )
 
-            give_loot(player, monster)
+            give_loot(
+                player,
+                monster
+            )
+
+            # Quest Progress
 
             if hasattr(player, "quest_progress"):
 
                 if monster["name"] in player.quest_progress:
 
-                    player.quest_progress[monster["name"]] += 1
+                    player.quest_progress[
+                        monster["name"]
+                    ] += 1
+
+            # Statistics
 
             if hasattr(player, "total_kills"):
 
                 player.total_kills += 1
+
+            if hasattr(player, "boss_kills"):
+
+                if "phase2" in monster:
+
+                    player.boss_kills += 1
 
             return True
 
@@ -140,7 +189,7 @@ def battle(player, monster):
             )
 
         # ==========================
-        # MONSTER ATTACK
+        # MONSTER AI
         # ==========================
 
         monster_ai(
@@ -149,12 +198,15 @@ def battle(player, monster):
         )
 
     # ==========================
-    # PLAYER DEAD
+    # PLAYER DEFEATED
     # ==========================
 
-    print("\n===== YOU DIED =====")
+    print("\n======================")
+    print("YOU DIED!")
+    print("======================")
 
     player.hp = player.max_hp
+    player.mp = player.max_mp
 
     print("Respawned in Town!")
 
